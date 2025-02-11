@@ -1,0 +1,20 @@
+@font-face {
+  font-family: Sahel;
+  src: url('Sahel-FD.eot');
+  src: url('Sahel-FD.eot?#iefix') format('embedded-opentype'),
+       url('Sahel-FD.woff') format('woff');
+  font-weight: normal;
+}
+
+body,html {
+  font-family: 'Sahel';
+  direction: rtl;
+  text-align: right;
+  font-size:15px;
+
+}
+.ms-auto {
+    margin-left: initial !important;
+
+    margin-right: auto;
+}

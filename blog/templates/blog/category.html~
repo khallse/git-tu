@@ -1,0 +1,62 @@
+{% extends 'blog/base.html' %}
+{% block title %}| articles {% endblock %}
+{% load jformat %}
+{% block main %}
+{% load static %}
+
+<!-- Main Content-->
+      <header class="masthead" style="background-image: url({% static 'blog/assets/img/home-bg.jpg' %})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>{{ category.title }} </h1>
+                            <span class="subheading">list of articale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    {% for article in articles %}
+                    <div class="post-preview">
+
+                        <a href="{% url 'blog:detail' article.slug %}">
+                            <h2 class="post-title">{{ article.title}}</h2>
+                            <h3 class="post-subtitle">{{ article.description | truncatechars:50 }}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#!">{{ article.id }}</a>
+                        <p>{{ article.published|jformat:" %d %B %Y %H:%M" }}</p>
+                        </p>
+                    </div>
+                        {% for c in article.category.all %}
+                            <a href="{% url 'blog:category' c.slug %}"> #{{ c }} </a>
+                            {% endfor %}
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Post preview-->
+                    {% endfor %}
+                    <!-- Pager-->
+                     <div class="d-flex justify-content-between">
+                        {% if articles.has_previous %}
+                        <div>
+                            <a class="btn btn-primary text-uppercase" href="{% url 'blog:category' articles.category.slug articles.previous_page_number  %}">New Posts</a>
+                        </div>
+                        {% endif %}
+                        {% if articles.has_next %}
+                        <div>
+                            <a class="btn btn-primary text-uppercase" href="{% url 'blog:category' articles.category.slug articles.next_page_number %}">Older Posts</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
